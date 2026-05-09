@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chart — Trendlines</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html" class="brand">Trendlines</a>
+  <a href="index.html">Learn</a>
+  <a href="chart.html" class="active">Chart</a>
+  <a href="watchlist.html">Watchlist</a>
+</nav>
+
+<main class="container wide">
+  <div class="callout">
+    <strong>How to use this page:</strong> Click the <em>Draw Trendline</em> button, then click two points on the chart (e.g., two swing lows for an uptrend line). The line is drawn and you can set your action / safety / target levels in the sidebar. Save it to your watchlist to get alerted.
+  </div>
+
+  <div class="toolbar">
+    <select id="symbolSelect" class="btn small">
+      <option value="platinum">Platinum (PL=F)</option>
+    </select>
+    <button id="drawBtn" class="btn small">Draw Trendline</button>
+    <button id="clearBtn" class="btn small ghost">Clear Drawing</button>
+    <span class="status" id="status">Ready.</span>
+  </div>
+
+  <div class="chart-layout">
+    <div class="chart-wrap">
+      <div id="chart"></div>
+      <div class="legend">
+        <span><span class="dot trend"></span>Trendline</span>
+        <span><span class="dot action"></span>Action line (entry trigger)</span>
+        <span><span class="dot safety"></span>Safety line (stop loss)</span>
+        <span><span class="dot target"></span>Target</span>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <h3>Setup</h3>
+      <div class="field">
+        <label>Name</label>
+        <input id="setupName" type="text" placeholder="PL breakout"/>
+      </div>
+      <div class="field">
+        <label>Direction</label>
+        <select id="direction" class="btn small" style="width:100px">
+          <option value="long">Long</option>
+          <option value="short">Short</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Action line</label>
+        <input id="actionPrice" type="number" step="0.01" placeholder="e.g. 980"/>
+      </div>
+      <div class="field">
+        <label>Safety line</label>
+        <input id="safetyPrice" type="number" step="0.01" placeholder="e.g. 955"/>
+      </div>
+      <div class="field">
+        <label>Target</label>
+        <input id="targetPrice" type="number" step="0.01" placeholder="e.g. 1050"/>
+      </div>
+
+      <h3 style="margin-top:18px">Risk Sizing</h3>
+      <div class="field">
+        <label>Account ($)</label>
+        <input id="accountSize" type="number" step="100" value="10000"/>
+      </div>
+      <div class="field">
+        <label>Risk %</label>
+        <input id="riskPct" type="number" step="0.1" value="1"/>
+      </div>
+
+      <div class="rr-display" id="rrDisplay">
+        <div class="ratio neutral" id="rrRatio">—</div>
+        <div class="label">Risk : Reward</div>
+        <div class="label" id="positionInfo" style="margin-top:6px"></div>
+      </div>
+
+      <div class="actions">
+        <button id="saveBtn" class="btn primary">Save to Watchlist</button>
+      </div>
+
+      <p class="help">
+        <strong>Beginner hint:</strong> aim for at least 1:2 R:R. The site marks it green when ≥ 2, amber 1–2, red below 1. Position size is calculated so a stop-out only loses your chosen Risk %.
+      </p>
+    </aside>
+  </div>
+</main>
+
+<script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<script type="module" src="js/chart.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watchlist — Trendlines</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html" class="brand">Trendlines</a>
+  <a href="index.html">Learn</a>
+  <a href="chart.html">Chart</a>
+  <a href="watchlist.html" class="active">Watchlist</a>
+</nav>
+
+<main class="container">
+  <h1 style="margin-top:8px">Your Setups</h1>
+  <p style="color:var(--muted);margin-top:0">Setups saved on this device. Each shows its current status against the latest price.</p>
+
+  <div class="callout">
+    <strong>Want Telegram alerts?</strong> Click <em>Export for alerts</em> below — copy the JSON into <code>alerts.json</code> in the GitHub repo and the scheduled action will start checking your levels every 30 minutes. See the <a href="https://github.com/KobiLDN/Trendlines#alerts" target="_blank">README</a> for first-time setup.
+  </div>
+
+  <div class="toolbar">
+    <span id="lastPrice" class="status">Loading latest price...</span>
+    <button id="exportBtn" class="btn small" style="margin-left:auto">Export for alerts</button>
+  </div>
+
+  <div id="setupList" class="setup-list"></div>
+
+  <dialog id="exportDialog" style="background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:20px;max-width:600px;width:90%">
+    <h3 style="margin-top:0">Copy this into alerts.json</h3>
+    <p style="color:var(--muted);font-size:0.9rem">Paste this content into the <code>alerts.json</code> file at the root of the repo, then commit. The GitHub Action will pick it up on its next run.</p>
+    <textarea id="exportText" style="width:100%;height:280px;background:var(--panel-2);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:10px;font-family:monospace;font-size:0.85rem" readonly></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+      <button id="copyBtn" class="btn small primary">Copy</button>
+      <button id="closeDialog" class="btn small ghost">Close</button>
+    </div>
+  </dialog>
+</main>
+
+<script type="module" src="js/watchlist.js"></script>
+</body>
+</html>

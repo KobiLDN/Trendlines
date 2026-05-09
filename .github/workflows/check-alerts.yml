@@ -1,0 +1,43 @@
+name: Check alerts
+
+on:
+  schedule:
+    # Every 30 minutes during US/EU market hours (Mon-Fri)
+    - cron: '*/30 6-22 * * 1-5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install deps
+        run: pip install -r scripts/requirements.txt
+
+      - name: Check alerts
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/check_alerts.py
+
+      - name: Commit alert state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .alert_state.json || true
+          if git diff --cached --quiet; then
+            echo "No state change."
+          else
+            git commit -m "alerts: update state"
+            git push
+          fi
