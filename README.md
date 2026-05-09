@@ -1,11 +1,15 @@
 # Trendlines
 
+**Live site: [https://kobildn.github.io/Trendlines/](https://kobildn.github.io/Trendlines/)**
+
 A beginner-friendly swing-trading helper for **platinum** (and any Yahoo ticker), built as a static site that runs on GitHub Pages.
 
 - **Learn page** — plain-English explainers for trendline, action line, safety line, entry, R:R
-- **Chart page** — TradingView Lightweight Charts; click two points to draw a trendline; auto-computes today's trendline price; visual action / safety / target lines; live R:R and position-size calculator
+- **Chart page** — TradingView Lightweight Charts. Draw multiple **green** support trendlines (swing lows) and multiple **red** resistance trendlines (swing highs); auto-computes today's trendline price; visual action / safety / target lines; live R:R and position-size calculator
 - **Watchlist** — saved setups (in browser localStorage) with live status (armed / triggered / stopped)
 - **Telegram alerts** — a GitHub Action runs every 30 minutes during market hours, checks your saved levels against the latest price, and pings you on Telegram
+
+Current version is shown as a badge at the top-right of every page (currently **v1.2**). See `FEATURES.txt` for the changelog.
 
 ## How it works
 

@@ -16,15 +16,17 @@
 
 <main class="container wide">
   <div class="callout">
-    <strong>How to use this page:</strong> Click the <em>Draw Trendline</em> button, then click two points on the chart (e.g., two swing lows for an uptrend line). The line is drawn and you can set your action / safety / target levels in the sidebar. Save it to your watchlist to get alerted.
+    <strong>How to use this page:</strong> Click <em>Draw Green</em> for support lines (connect swing lows) or <em>Draw Red</em> for resistance lines (connect swing highs), then click two points on the chart. You can draw as many of each as you like — they all stay on the chart. Set your action / safety / target levels in the sidebar and save to your watchlist to get alerted.
   </div>
 
   <div class="toolbar">
     <select id="symbolSelect" class="btn small">
       <option value="platinum">Platinum (PL=F)</option>
     </select>
-    <button id="drawBtn" class="btn small">Draw Trendline</button>
-    <button id="clearBtn" class="btn small ghost">Clear Drawing</button>
+    <button id="drawGreenBtn" class="btn small" style="background:#1a3a22;border-color:#3fb950;color:#3fb950">Draw Green (support)</button>
+    <button id="drawRedBtn" class="btn small" style="background:#3a1a1a;border-color:#f85149;color:#f85149">Draw Red (resistance)</button>
+    <button id="undoBtn" class="btn small ghost">Undo Last</button>
+    <button id="clearBtn" class="btn small ghost">Clear All</button>
     <span class="status" id="status">Ready.</span>
   </div>
 
@@ -32,7 +34,8 @@
     <div class="chart-wrap">
       <div id="chart"></div>
       <div class="legend">
-        <span><span class="dot trend"></span>Trendline</span>
+        <span><span class="dot" style="background:#3fb950"></span>Green trendline (support)</span>
+        <span><span class="dot" style="background:#f85149"></span>Red trendline (resistance)</span>
         <span><span class="dot action"></span>Action line (entry trigger)</span>
         <span><span class="dot safety"></span>Safety line (stop loss)</span>
         <span><span class="dot target"></span>Target</span>
