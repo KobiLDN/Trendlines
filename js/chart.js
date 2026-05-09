@@ -23,10 +23,15 @@ const candleSeries = chart.addCandlestickSeries({
 });
 
 let candles = [];
-let trendSeries = null;
-let trendAnchors = []; // [{time, price}, {time, price}]
+// Each trendline: { series, anchors: [{time,price},{time,price}], color }
+let trendlines = [];
+let pendingAnchors = [];
 let drawing = false;
+let drawColor = null; // '#3fb950' green or '#f85149' red
 let actionLine = null, safetyLine = null, targetLine = null;
+
+const COLOR_GREEN = '#3fb950';
+const COLOR_RED = '#f85149';
 
 // ---- Load data ----
 async function loadData(symbol = 'platinum') {
@@ -51,49 +56,72 @@ async function loadData(symbol = 'platinum') {
 }
 
 // ---- Trendline drawing ----
-$('drawBtn').addEventListener('click', () => {
+function startDraw(color, label) {
   drawing = true;
-  trendAnchors = [];
-  status('Drawing: click the FIRST anchor point on the chart.');
-});
+  drawColor = color;
+  pendingAnchors = [];
+  status(`Drawing ${label}: click the FIRST anchor point on the chart.`);
+}
+
+$('drawGreenBtn').addEventListener('click', () => startDraw(COLOR_GREEN, 'green (support)'));
+$('drawRedBtn').addEventListener('click', () => startDraw(COLOR_RED, 'red (resistance)'));
 
 $('clearBtn').addEventListener('click', () => {
-  if (trendSeries) { chart.removeSeries(trendSeries); trendSeries = null; }
-  trendAnchors = [];
+  trendlines.forEach(t => chart.removeSeries(t.series));
+  trendlines = [];
+  pendingAnchors = [];
   drawing = false;
-  status('Drawing cleared.');
+  status('All trendlines cleared.');
+});
+
+$('undoBtn').addEventListener('click', () => {
+  if (drawing && pendingAnchors.length > 0) {
+    pendingAnchors = [];
+    drawing = false;
+    status('Cancelled in-progress drawing.');
+    return;
+  }
+  const last = trendlines.pop();
+  if (last) {
+    chart.removeSeries(last.series);
+    status(`Removed last ${last.color === COLOR_GREEN ? 'green' : 'red'} trendline. ${trendlines.length} remaining.`);
+  } else {
+    status('Nothing to undo.');
+  }
 });
 
 chart.subscribeClick((param) => {
   if (!drawing) return;
   if (!param.time || !param.point) return;
-  // Convert pixel y to price
   const price = candleSeries.coordinateToPrice(param.point.y);
   if (price == null) return;
-  trendAnchors.push({ time: param.time, price });
-  if (trendAnchors.length === 1) {
+  pendingAnchors.push({ time: param.time, price });
+  if (pendingAnchors.length === 1) {
     status('Drawing: click the SECOND anchor point.');
-  } else if (trendAnchors.length === 2) {
-    drawTrendline();
+  } else if (pendingAnchors.length === 2) {
+    drawTrendline(pendingAnchors, drawColor);
+    pendingAnchors = [];
     drawing = false;
   }
 });
 
-function drawTrendline() {
-  if (trendSeries) chart.removeSeries(trendSeries);
-  trendSeries = chart.addLineSeries({
-    color: '#d29922', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid,
+function drawTrendline(anchors, color) {
+  const series = chart.addLineSeries({
+    color, lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid,
     lastValueVisible: false, priceLineVisible: false,
   });
-  const [p1, p2] = trendAnchors;
+  const [p1, p2] = anchors;
   const fromTime = candles[0].time;
   const toTime = candles[candles.length - 1].time;
   const projected = projectTrendline(p1, p2, fromTime, toTime, 100);
-  trendSeries.setData(projected);
+  series.setData(projected);
+  trendlines.push({ series, anchors: [...anchors], color });
 
-  // Compute trendline price at last bar — useful suggested action level
   const lineAtLast = projected[projected.length - 1].value;
-  status(`Trendline drawn. Today's trendline price: $${lineAtLast.toFixed(2)}. Suggest setting action line near here.`);
+  const colorName = color === COLOR_GREEN ? 'Green' : 'Red';
+  const greenCount = trendlines.filter(t => t.color === COLOR_GREEN).length;
+  const redCount = trendlines.filter(t => t.color === COLOR_RED).length;
+  status(`${colorName} trendline drawn at $${lineAtLast.toFixed(2)}. Total: ${greenCount} green, ${redCount} red.`);
   if (!$('actionPrice').value) $('actionPrice').value = lineAtLast.toFixed(2);
   updateLevels();
   updateRR();
@@ -166,7 +194,8 @@ $('saveBtn').addEventListener('click', () => {
     direction: $('direction').value,
     action, safety,
     target: isNaN(target) ? null : target,
-    trendline: trendAnchors.length === 2 ? trendAnchors : null,
+    trendline: trendlines.length > 0 ? trendlines[trendlines.length - 1].anchors : null,
+    trendlines: trendlines.map(t => ({ anchors: t.anchors, color: t.color })),
   };
   addSetup(setup);
   status(`Saved "${name}" to watchlist.`);
