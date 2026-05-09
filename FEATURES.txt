@@ -1,0 +1,92 @@
+TRENDLINES — FEATURES LIST
+===========================
+
+Current version: v1.0
+Repo: https://github.com/KobiLDN/Trendlines
+
+This file tracks what the site currently does, and what's planned next.
+Bump the version in js/version.js whenever you commit a meaningful change.
+
+
+SHIPPED (v1.0)
+--------------
+[x] Learn page with 5 core swing-trading concepts in plain English
+    (trendline, action line, safety line, entry, risk:reward)
+[x] Chart page using TradingView Lightweight Charts
+[x] Click-to-draw trendline (two anchor points)
+[x] Auto-suggests today's action line price from drawn trendline
+[x] Visual action / safety / target lines on the chart
+[x] Live risk:reward ratio (color-coded: green >=2, amber 1-2, red <1)
+[x] Position-size calculator from account size + risk %
+[x] Watchlist with localStorage persistence
+[x] Status badge per setup: armed / triggered / stopped
+[x] Export-to-alerts.json button on watchlist
+[x] GitHub Action: daily platinum data refresh (yfinance)
+[x] GitHub Action: 30-min alert checker, Telegram notifications
+[x] Initial 2 years of platinum daily data committed
+
+
+TO DO — HIGH PRIORITY
+---------------------
+[ ] *** Telegram setup instructions ON THE SITE itself ***
+    Currently they live only in README.md. Add a dedicated /alerts.html
+    or /setup.html page that walks through:
+      1. Create a bot via @BotFather
+      2. Get your chat ID
+      3. Add the two GitHub secrets
+      4. Enable Actions write permission
+      5. Paste exported JSON into alerts.json and commit
+    With screenshots of each step would be ideal.
+
+[ ] Show "armed/triggered/stopped" badge on the chart page too,
+    not just the watchlist.
+
+[ ] Show the version number visibly on every page (footer).
+    Already added in v1.0 — keep bumping it.
+
+
+TO DO — NICE TO HAVE
+--------------------
+[ ] Edit existing setups (currently you have to delete and recreate).
+[ ] Drag trendline anchors after drawing to nudge them.
+[ ] Show drawn trendlines on the chart when revisiting a saved setup
+    (currently anchors are stored but not re-rendered).
+[ ] Multiple symbols dropdown (gold GC=F, silver SI=F, copper HG=F).
+    Code already supports it — just needs symbols added to
+    scripts/fetch_data.py and the <select> in chart.html.
+[ ] Mark swing highs/lows visually on the chart (already detected by
+    js/indicators.js findSwings, just not drawn yet).
+[ ] Show ATR-based "noise band" around the action line so you can see
+    whether a break is meaningful or within normal volatility.
+[ ] Backtest mode: scrub through history and see how a drawn trendline
+    would have performed.
+[ ] Export setups as a shareable URL (so you can send a setup to a
+    friend without them needing your localStorage).
+[ ] Email alerts as alternative to Telegram (using GitHub Action +
+    SMTP via free service like Resend's free tier).
+[ ] Discord webhook alerts (simpler than Telegram for some users).
+
+
+TO DO — IDEAS / MAYBE
+---------------------
+[ ] Intraday candles (1h, 4h) for finer entries — needs paid data or
+    scraping. Skip unless really needed.
+[ ] Multi-timeframe view (daily + weekly side by side).
+[ ] Auto-detect swing high/low based "obvious" trendlines as
+    suggestions when you open the chart.
+[ ] Trade journal: record what actually happened after entry, build
+    up a personal stats page (win rate, avg R, etc.).
+[ ] Mobile-friendly chart drawing (current click-to-draw is tricky
+    on touch).
+
+
+VERSIONING CONVENTION
+---------------------
+v1.0    Initial release
+v1.x    Bug fixes and small additions on the v1 base
+v2.0    Reserved for major change (e.g. backend rewrite, framework swap,
+        or breaking storage migration)
+
+Bump v1.0 -> v1.1 when shipping any user-visible change.
+The version string lives in: js/version.js
+It appears in the footer of every page automatically.

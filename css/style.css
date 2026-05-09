@@ -294,6 +294,22 @@ section h2 { margin: 0 0 8px; font-size: 1.5rem; }
   border-radius: 8px;
 }
 
+.version-footer {
+  position: fixed;
+  bottom: 8px;
+  right: 12px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  background: rgba(22, 27, 34, 0.85);
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+.version-footer a { color: var(--muted); }
+.version-footer a:hover { color: var(--text); text-decoration: none; }
+
 .callout {
   background: rgba(88,166,255,0.08);
   border-left: 3px solid var(--accent);
