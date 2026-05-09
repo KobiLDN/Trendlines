@@ -59,6 +59,18 @@ code {
   font-size: 0.95rem;
 }
 .topnav a.active, .topnav a:hover { color: var(--text); text-decoration: none; }
+.topnav .version-badge {
+  margin-left: auto;
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #58a6ff;
+  background: rgba(88, 166, 255, 0.12);
+  border: 1px solid rgba(88, 166, 255, 0.4);
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+.topnav .version-badge:hover { color: #79b8ff; background: rgba(88, 166, 255, 0.2); text-decoration: none; }
 
 .container {
   max-width: 880px;

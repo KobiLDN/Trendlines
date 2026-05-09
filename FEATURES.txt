@@ -1,12 +1,28 @@
 TRENDLINES — FEATURES LIST
 ===========================
 
-Current version: v1.0
+Current version: v1.2
 Repo: https://github.com/KobiLDN/Trendlines
 
 This file tracks what the site currently does, and what's planned next.
 Bump the version in js/version.js whenever you commit a meaningful change.
 
+
+SHIPPED (v1.2)
+--------------
+[x] Multiple trendlines per chart, color-coded:
+      - Green = support (connect swing lows)
+      - Red   = resistance (connect swing highs)
+    Draw as many of each as you like; all lines stay on the chart.
+[x] Undo Last button (removes the most recent trendline or cancels
+    an in-progress draw).
+[x] Clear All button (removes every trendline).
+[x] Version badge pinned to the top-right of every page's nav bar,
+    linking to FEATURES.txt changelog.
+
+SHIPPED (v1.1)
+--------------
+[x] Version footer + version constant in js/version.js
 
 SHIPPED (v1.0)
 --------------
@@ -83,10 +99,12 @@ TO DO — IDEAS / MAYBE
 VERSIONING CONVENTION
 ---------------------
 v1.0    Initial release
-v1.x    Bug fixes and small additions on the v1 base
+v1.1    Version footer added
+v1.2    Multiple green/red trendlines + version badge in top nav
+v1.x    Bump on every user-visible change
 v2.0    Reserved for major change (e.g. backend rewrite, framework swap,
         or breaking storage migration)
 
-Bump v1.0 -> v1.1 when shipping any user-visible change.
 The version string lives in: js/version.js
-It appears in the footer of every page automatically.
+It appears as a badge at the top-right of every page automatically,
+plus a small footer link.
