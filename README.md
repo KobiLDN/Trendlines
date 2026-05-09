@@ -1,5 +1,7 @@
 # Trendlines
 
+**Live site: [https://kobildn.github.io/Trendlines/](https://kobildn.github.io/Trendlines/)**
+
 A beginner-friendly swing-trading helper for **platinum** (and any Yahoo ticker), built as a static site that runs on GitHub Pages.
 
 - **Learn page** — plain-English explainers for trendline, action line, safety line, entry, R:R
